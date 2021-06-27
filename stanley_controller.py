@@ -4,7 +4,7 @@ from libs.normalise_angle import normalise_angle
 
 class StanleyController:
 
-    def __init__(self, control_gain=2.5, softening_gain=1.0, yaw_rate_gain=0.0, steering_damp_gain=0.0, max_steer=24, wheelbase=0.0, path_x=None, path_y=None, path_yaw=None):
+    def __init__(self, control_gain=2.5, softening_gain=1.0, yaw_rate_gain=0.0, steering_damp_gain=0.0, max_steer=np.deg2rad(24), wheelbase=0.0, path_x=None, path_y=None, path_yaw=None):
         
         """
         Stanley Controller
@@ -88,7 +88,7 @@ class StanleyController:
 
         target_index, dx, dy = self.find_target_path_id(x, y, yaw)
         yaw_error = self.calculate_yaw_term(target_index, yaw)
-        crosstrack_steering_error, crosstrack_error = self. calculate_crosstrack_term(target_index, target_velocity, yaw, dx, dy)
+        crosstrack_steering_error, crosstrack_error = self.calculate_crosstrack_term(target_index, target_velocity, yaw, dx, dy)
         yaw_rate_damping = self.calculate_yaw_rate_term(target_velocity, steering_angle)
         
         desired_steering_angle = yaw_error + crosstrack_steering_error + yaw_rate_damping

@@ -1,8 +1,6 @@
-import os
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import random as rand
 
 from stanley_controller import StanleyController
 from matplotlib.animation import FuncAnimation
@@ -43,10 +41,8 @@ class Car:
         self.x = init_x
         self.y = init_y
         self.yaw = init_yaw
-        self.v = 0.0
-        self.throttle = 1250
+        self.v = 25.0
         self.delta = 0.0
-        self.omega = 0.0
         self.L = 2.5
         self.max_steer = np.deg2rad(33)
         self.dt = sim_params.dt
@@ -60,7 +56,7 @@ class Car:
         self.k = 8.0
         self.ksoft = 1.0
         self.kyaw = 0.01
-        self.ksteer = 0.1
+        self.ksteer = 0.0
         self.crosstrack_error = None
         self.target_id = None
 
@@ -76,9 +72,9 @@ class Car:
 
     def drive(self):
         
-        self.delta, self.target_id, self.crosstrack_error= self.tracker.stanley_control(self.x, self.y, self.yaw, self.v, self.delta)
-        self.kbm = KinematicBicycleModel(self.x, self.y, self.yaw, self.v, self.throttle, self.delta, self.L, self.max_steer, self.dt, self.c_r, self.c_a)
-        self.x, self.y, self.yaw, self.v, self.delta, self.omega = self.kbm.kinematic_model()
+        self.delta, self.target_id, self.crosstrack_error = self.tracker.stanley_control(self.x, self.y, self.yaw, self.v, self.delta)
+        self.kbm = KinematicBicycleModel(self.x, self.y, self.yaw, self.v, self.delta, self.L, self.dt)
+        self.x, self.y, self.yaw = self.kbm.kinematic_model()
 
 def main():
     
@@ -90,8 +86,8 @@ def main():
     interval = sim.dt * 10**3
 
     fig, ax = plt.subplots(3, 1)
-    ax[0].set_aspect('equal')
 
+    ax[0].set_aspect('equal')
     ax[0].plot(path.px, path.py, '--', color='gold')
 
     annotation = ax[0].annotate('Crosstrack error: {}'.format('None'), xy=(car.x - 10, car.y + 5), color='black', annotation_clip=False)
@@ -157,9 +153,12 @@ def main():
 
         return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
 
-    _ = FuncAnimation(fig, animate, frames=sim.frames, interval=interval, repeat=sim.loop)
+    anim = FuncAnimation(fig, animate, frames=sim.frames, interval=interval, repeat=sim.loop)
     # anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
+
+    print("Mean yaw: {}".format(np.mean(yaw_arr)))
+    print("Mean crosstrack error: {}".format(np.mean(crosstrack_arr)))
 
 if __name__ == '__main__':
     main()
