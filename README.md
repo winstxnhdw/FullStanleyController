@@ -10,6 +10,7 @@ At initialisation
 :param control_gain:                (float) time constant [1/s]
 :param softening_gain:              (float) softening gain [m/s]
 :param yaw_rate_gain:               (float) yaw rate gain [rad]
+:param steering_damp_gain:          (float) steering damp gain
 :param max_steer:                   (float) vehicle's steering limits [rad]
 :param wheelbase:                   (float) vehicle's wheelbase [m]
 :param path_x:                      (list) list of x-coordinates along the path
