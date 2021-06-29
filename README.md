@@ -9,8 +9,6 @@ The Stanley controller is a non-linear controller for real-time autonomous autom
 
 
 ```yaml
-Stanley Controller
-
 At initialisation
 :param control_gain:                (float) time constant [1/s]
 :param softening_gain:              (float) softening gain [m/s]
