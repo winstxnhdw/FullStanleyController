@@ -1,7 +1,12 @@
 # Stanley Controller
-   
+
+<div align="center">
+	<img src="resources/animation.gif" />
+</div>
+
 ## Abstract
 The Stanley controller is a non-linear controller for real-time autonomous automobile trajectory tracking. This repository contains a complete python abstraction of Stanford's [Stanley controller](http://robotics.stanford.edu/~gabeh/papers/hoffmann_stanley_control07.pdf).
+
 
 ```yaml
 Stanley Controller

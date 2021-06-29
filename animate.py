@@ -69,12 +69,12 @@ class Car:
         self.tread = 0.7
 
         self.tracker = StanleyController(self.k, self.ksoft, self.kyaw, self.ksteer, self.max_steer, self.L, self.px, self.py, self.pyaw)
+        self.kbm = KinematicBicycleModel(self.L, self.dt)
 
     def drive(self):
         
         self.delta, self.target_id, self.crosstrack_error = self.tracker.stanley_control(self.x, self.y, self.yaw, self.v, self.delta)
-        self.kbm = KinematicBicycleModel(self.x, self.y, self.yaw, self.v, self.delta, self.L, self.dt)
-        self.x, self.y, self.yaw = self.kbm.kinematic_model()
+        self.x, self.y, self.yaw = self.kbm.kinematic_model(self.x, self.y, self.yaw, self.v, self.delta)
 
 def main():
     
@@ -154,7 +154,7 @@ def main():
         return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
 
     anim = FuncAnimation(fig, animate, frames=sim.frames, interval=interval, repeat=sim.loop)
-    # anim.save('animation.gif', writer='imagemagick', fps=50)
+    anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
 
     print("Mean yaw: {}".format(np.mean(yaw_arr)))
