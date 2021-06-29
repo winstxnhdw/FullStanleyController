@@ -46,7 +46,6 @@ $ pip install numpy
 ```
 
 ## Demo
-This animation is inspired by Atsushi Sakai.
 ```bash
 # Install requirements.txt
 $ pip install -r requirements.txt
