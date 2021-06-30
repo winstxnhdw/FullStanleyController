@@ -9,6 +9,8 @@ The Stanley controller is a non-linear controller for real-time autonomous autom
 
 
 ```yaml
+Stanley Controller
+
 At initialisation
 :param control_gain:                (float) time constant [1/s]
 :param softening_gain:              (float) softening gain [m/s]
@@ -27,6 +29,33 @@ Every frame
 :param yaw:                         (float) vehicle's heading [rad]
 :param target_velocity:             (float) vehicle's velocity [m/s]
 :param steering_angle:              (float) vehicle's steering angle [rad]
+
+:return limited_steering_angle:     (float) steering angle after imposing steering limits [rad]
+:return target_index:               (int) closest path index
+:return crosstrack_error:           (float) distance from closest path index [m]
+```
+
+```yaml
+Stanley Controller Piecewise
+
+At initialisation
+:param control_gain:                (float) time constant [1/s]
+:param softening_gain:              (float) softening gain [m/s]
+:param yaw_rate_gain:               (float) yaw rate gain [rad]
+:param steering_damp_gain:          (float) steering damp gain
+:param max_steer:                   (float) vehicle's steering limits [rad]
+:param wheelbase:                   (float) vehicle's wheelbase [m]
+:param dt:                          (float) discrete time period [s]
+
+Every frame
+:param x:                           (float) vehicle's x-coordinate [m]
+:param y:                           (float) vehicle's y-coordinate [m]
+:param yaw:                         (float) vehicle's heading [rad]
+:param target_velocity:             (float) vehicle's velocity [m/s]
+:param steering_angle:              (float) vehicle's steering angle [rad]
+:param path_x:                      (list) piecewise list of x-coordinates along the path
+:param path_y:                      (list) piecewise list of y-coordinates along the path
+:param path_yaw:                    (list) piecewise list of discrete yaw values along the path
 
 :return limited_steering_angle:     (float) steering angle after imposing steering limits [rad]
 :return target_index:               (int) closest path index

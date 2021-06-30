@@ -7,7 +7,7 @@ class StanleyController:
     def __init__(self, control_gain=2.5, softening_gain=1.0, yaw_rate_gain=0.0, steering_damp_gain=0.0, max_steer=np.deg2rad(24), wheelbase=0.0):
         
         """
-        Stanley Controller
+        Stanley Controller Piecewise
 
         At initialisation
         :param control_gain:                (float) time constant [1/s]
