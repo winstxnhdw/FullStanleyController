@@ -7,10 +7,8 @@
 ## Abstract
 The Stanley controller is a non-linear controller for real-time autonomous automobile trajectory tracking. This repository contains a complete python abstraction of Stanford's [Stanley controller](http://robotics.stanford.edu/~gabeh/papers/hoffmann_stanley_control07.pdf).
 
-
-```yaml
 Stanley Controller
-
+```yaml
 At initialisation
 :param control_gain:                (float) time constant [1/s]
 :param softening_gain:              (float) softening gain [m/s]
@@ -35,9 +33,8 @@ Every frame
 :return crosstrack_error:           (float) distance from closest path index [m]
 ```
 
-```yaml
 Stanley Controller Piecewise
-
+```yaml
 At initialisation
 :param control_gain:                (float) time constant [1/s]
 :param softening_gain:              (float) softening gain [m/s]
