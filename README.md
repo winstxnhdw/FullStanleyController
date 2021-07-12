@@ -21,7 +21,7 @@ At initialisation
 :param path_yaw:                    (list) list of discrete yaw values along the path
 :param dt:                          (float) discrete time period [s]
 
-Every frame
+At every time step
 :param x:                           (float) vehicle's x-coordinate [m]
 :param y:                           (float) vehicle's y-coordinate [m]
 :param yaw:                         (float) vehicle's heading [rad]
