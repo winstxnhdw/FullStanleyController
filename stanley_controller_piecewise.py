@@ -18,7 +18,7 @@ class StanleyController:
         :param wheelbase:                   (float) vehicle's wheelbase [m]
         :param dt:                          (float) discrete time period [s]
 
-        Every frame
+        At every time step
         :param x:                           (float) vehicle's x-coordinate [m]
         :param y:                           (float) vehicle's y-coordinate [m]
         :param yaw:                         (float) vehicle's heading [rad]
