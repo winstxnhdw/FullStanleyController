@@ -153,8 +153,8 @@ def main():
 
         return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
 
-    anim = FuncAnimation(fig, animate, frames=sim.frames, interval=interval, repeat=sim.loop)
-    anim.save('animation.gif', writer='imagemagick', fps=50)
+    _ = FuncAnimation(fig, animate, frames=sim.frames, interval=interval, repeat=sim.loop)
+    # anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
 
     print("Mean yaw: {}".format(np.mean(yaw_arr)))
