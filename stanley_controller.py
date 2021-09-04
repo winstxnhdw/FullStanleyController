@@ -16,9 +16,9 @@ class StanleyController:
         :param steering_damp_gain:          (float) steering damp gain
         :param max_steer:                   (float) vehicle's steering limits [rad]
         :param wheelbase:                   (float) vehicle's wheelbase [m]
-        :param path_x:                      (list) list of x-coordinates along the path
-        :param path_y:                      (list) list of y-coordinates along the path
-        :param path_yaw:                    (list) list of discrete yaw values along the path
+        :param path_x:                      (numpy.ndarray) list of x-coordinates along the path
+        :param path_y:                      (numpy.ndarray) list of y-coordinates along the path
+        :param path_yaw:                    (numpy.ndarray) list of discrete yaw values along the path
         :param dt:                          (float) discrete time period [s]
 
         At every time step

@@ -24,9 +24,9 @@ class StanleyController:
         :param yaw:                         (float) vehicle's heading [rad]
         :param target_velocity:             (float) vehicle's velocity [m/s]
         :param steering_angle:              (float) vehicle's steering angle [rad]
-        :param path_x:                      (list) piecewise list of x-coordinates along the path
-        :param path_y:                      (list) piecewise list of y-coordinates along the path
-        :param path_yaw:                    (list) piecewise list of discrete yaw values along the path
+        :param path_x:                      (numpy.ndarray) piecewise list of x-coordinates along the path
+        :param path_y:                      (numpy.ndarray) piecewise list of y-coordinates along the path
+        :param path_yaw:                    (numpy.ndarray) piecewise list of discrete yaw values along the path
 
         :return limited_steering_angle:     (float) steering angle after imposing steering limits [rad]
         :return target_index:               (int) closest path index
@@ -46,8 +46,8 @@ class StanleyController:
         fx = x + self.L * np.cos(yaw)
         fy = y + self.L * np.sin(yaw)
 
-        dx = [fx - icx for icx in px] # Find the x-axis of the front axle relative to the path
-        dy = [fy - icy for icy in py] # Find the y-axis of the front axle relative to the path
+        dx = fx - self.px    # Find the x-axis of the front axle relative to the path
+        dy = fy - self.py    # Find the y-axis of the front axle relative to the path
 
         d = np.hypot(dx, dy) # Find the distance from the front axle to the path
         target_index = np.argmin(d) # Find the shortest distance in the array
