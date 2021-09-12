@@ -62,8 +62,9 @@ class StanleyController:
 
     def calculate_crosstrack_term(self, target_index, target_velocity, yaw, dx, dy):
 
-        front_axle_vector = [np.sin(yaw), -np.cos(yaw)]
-        crosstrack_error = np.dot([dx[target_index], dy[target_index]], front_axle_vector)
+        front_axle_vector = [np.cos(yaw), np.sin(yaw)]
+        nearest_path_vector = [dx[target_index], dy[target_index]]
+        crosstrack_error = np.dot(nearest_path_vector, front_axle_vector)
 
         crosstrack_steering_error = np.arctan2((self.k * crosstrack_error), (self.k_soft + target_velocity))
 
