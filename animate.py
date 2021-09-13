@@ -16,7 +16,7 @@ class Simulation:
 
         self.dt = 1/fps
         self.map_size = 100
-        self.frames = 1250
+        self.frames = 1300
         self.loop = False
 
 class Path:
@@ -55,7 +55,7 @@ class Car:
         self.pyaw = path_params.pyaw
         self.k = 8.0
         self.ksoft = 1.0
-        self.kyaw = 0.01
+        self.kyaw = 0.0
         self.ksteer = 0.0
         self.crosstrack_error = None
         self.target_id = None
