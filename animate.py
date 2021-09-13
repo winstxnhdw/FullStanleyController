@@ -90,7 +90,7 @@ def main():
     ax[0].set_aspect('equal')
     ax[0].plot(path.px, path.py, '--', color='gold')
 
-    annotation = ax[0].annotate('Crosstrack error: {}'.format('None'), xy=(car.x - 10, car.y + 5), color='black', annotation_clip=False)
+    annotation = ax[0].annotate(f"Crosstrack error: {float('inf')}", xy=(car.x - 10, car.y + 5), color='black', annotation_clip=False)
     target, = ax[0].plot([], [], '+r')
 
     outline, = ax[0].plot([], [], color='black')
@@ -134,7 +134,7 @@ def main():
         target.set_data(path.px[car.target_id], path.py[car.target_id])
 
         # Annotate car's coordinate above car
-        annotation.set_text('Crosstrack error: {}'.format(np.around(car.crosstrack_error, 5)))
+        annotation.set_text(f"Crosstrack error: {car.crosstrack_error:.5f}")
         annotation.set_position((car.x - 10, car.y + 5))
 
         frames.append(frame)
@@ -149,7 +149,7 @@ def main():
         crosstrack_data.set_data(frames, crosstrack_arr)
         ax[2].set_ylim(crosstrack_arr[-1] - 1, crosstrack_arr[-1] + 1)
 
-        ax[0].set_title('{}s'.format(np.around(sim.dt * frame, 2)), loc='right')
+        ax[0].set_title(f'{sim.dt*frame:.2f}s', loc='right')
 
         return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
 
@@ -157,8 +157,8 @@ def main():
     # anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
 
-    print("Mean yaw: {}".format(np.mean(yaw_arr)))
-    print("Mean crosstrack error: {}".format(np.mean(crosstrack_arr)))
+    print(f"Mean yaw: {np.mean(yaw_arr)}")
+    print(f"Mean crosstrack error: {np.mean(crosstrack_arr)}")
 
 if __name__ == '__main__':
     main()
