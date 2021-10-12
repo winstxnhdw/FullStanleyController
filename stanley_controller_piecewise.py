@@ -38,13 +38,13 @@ class StanleyController:
         self.k_yaw_rate = yaw_rate_gain
         self.k_damp_steer = steering_damp_gain
         self.max_steer = max_steer
-        self.L = wheelbase
+        self.wheelbase = wheelbase
 
     def find_target_path_id(self, x, y, yaw, px, py):  
 
         # Calculate position of the front axle
-        fx = x + self.L * np.cos(yaw)
-        fy = y + self.L * np.sin(yaw)
+        fx = x + self.wheelbase * np.cos(yaw)
+        fy = y + self.wheelbase * np.sin(yaw)
 
         dx = fx - px    # Find the x-axis of the front axle relative to the path
         dy = fy - py    # Find the y-axis of the front axle relative to the path
@@ -72,7 +72,7 @@ class StanleyController:
 
     def calculate_yaw_rate_term(self, target_velocity, steering_angle):
 
-        yaw_rate_error = self.k_yaw_rate*(-target_velocity*np.sin(steering_angle))/self.L
+        yaw_rate_error = self.k_yaw_rate*(-target_velocity*np.sin(steering_angle))/self.wheelbase
 
         return yaw_rate_error
 
