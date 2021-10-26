@@ -46,8 +46,8 @@ class StanleyController:
         fx = x + self.wheelbase * np.cos(yaw)
         fy = y + self.wheelbase * np.sin(yaw)
 
-        dx = fx - px    # Find the x-axis of the front axle relative to the path
-        dy = fy - py    # Find the y-axis of the front axle relative to the path
+        dx = fx - px # Find the x-axis of the front axle relative to the path
+        dy = fy - py # Find the y-axis of the front axle relative to the path
 
         d = np.hypot(dx, dy) # Find the distance from the front axle to the path
         target_index = np.argmin(d) # Find the shortest distance in the array
