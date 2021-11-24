@@ -69,8 +69,6 @@ Every frame
 
 ## Requirements
 
-Install NumPy
-
 ```bash
 pip install numpy
 ```
