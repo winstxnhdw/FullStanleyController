@@ -70,10 +70,15 @@ $ pip install numpy
 ```
 
 ## Demo
-```bash
-# Install requirements.txt
-$ pip install -r requirements.txt
 
-# Play the animation
-$ python animation.py
+Install requirements.txt
+
+```bash
+pip install -r requirements.txt
+```
+
+Play the animation
+
+```
+python animation.py
 ```
