@@ -1,12 +1,13 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from stanley_controller import StanleyController
+from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
 from libs.kinematic_model import KinematicBicycleModel
 from libs.car_description import Description
 from libs.cubic_spline_interpolator import generate_cubic_spline
+from stanley_controller import StanleyController
+
 
 class Simulation:
 
