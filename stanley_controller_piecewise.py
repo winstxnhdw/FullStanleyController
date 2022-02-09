@@ -1,5 +1,6 @@
 import numpy as np
 
+from math import cos, sin, atan2
 from libs.normalise_angle import normalise_angle
 
 class StanleyController:
@@ -43,8 +44,8 @@ class StanleyController:
     def find_target_path_id(self, x, y, yaw, px, py):  
 
         # Calculate position of the front axle
-        fx = x + self.wheelbase * np.cos(yaw)
-        fy = y + self.wheelbase * np.sin(yaw)
+        fx = x + self.wheelbase * cos(yaw)
+        fy = y + self.wheelbase * sin(yaw)
 
         dx = fx - px # Find the x-axis of the front axle relative to the path
         dy = fy - py # Find the y-axis of the front axle relative to the path
@@ -62,17 +63,17 @@ class StanleyController:
 
     def calculate_crosstrack_term(self, target_velocity, yaw, dx, dy, absolute_error):
 
-        front_axle_vector = [np.sin(yaw), -np.cos(yaw)]
-        nearest_path_vector = [dx, dy]
-        crosstrack_error = np.sign(np.dot(nearest_path_vector, front_axle_vector)) * absolute_error
+        front_axle_vector = np.array([sin(yaw), -cos(yaw)])
+        nearest_path_vector = np.array([dx, dy])
+        crosstrack_error = np.sign(nearest_path_vector@front_axle_vector) * absolute_error
 
-        crosstrack_steering_error = np.arctan2((self.k * crosstrack_error), (self.k_soft + target_velocity))
+        crosstrack_steering_error = atan2((self.k * crosstrack_error), (self.k_soft + target_velocity))
 
         return crosstrack_steering_error, crosstrack_error
 
     def calculate_yaw_rate_term(self, target_velocity, steering_angle):
 
-        yaw_rate_error = self.k_yaw_rate*(-target_velocity*np.sin(steering_angle))/self.wheelbase
+        yaw_rate_error = self.k_yaw_rate*(-target_velocity*sin(steering_angle))/self.wheelbase
 
         return yaw_rate_error
 
