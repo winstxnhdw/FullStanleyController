@@ -16,7 +16,8 @@ class Simulation:
         fps = 50.0
 
         self.dt = 1/fps
-        self.map_size = 100
+        self.map_size_x = 60
+        self.map_size_y = 20
         self.frames = 1300
         self.loop = False
 
@@ -77,6 +78,45 @@ class Car:
         self.delta, self.target_id, self.crosstrack_error = self.tracker.stanley_control(self.x, self.y, self.yaw, self.v, self.delta)
         self.x, self.y, self.yaw = self.kbm.kinematic_model(self.x, self.y, self.yaw, self.v, self.delta)
 
+def animate(frame, *args):
+
+    ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data = args
+
+    ax[0].set_title(f'{sim.dt*frame:.2f}s', loc='right')
+
+    # Camera tracks car
+    ax[0].set_xlim(car.x - sim.map_size_x, car.x + sim.map_size_x)
+    ax[0].set_ylim(car.y - sim.map_size_y, car.y + sim.map_size_y)
+
+    # Drive and draw car
+    car.drive()
+    outline_plot, fr_plot, rr_plot, fl_plot, rl_plot = desc.plot_car(car.x, car.y, car.yaw, car.delta)
+    outline.set_data(outline_plot[0], outline_plot[1])
+    fr.set_data(*fr_plot)
+    rr.set_data(*rr_plot)
+    fl.set_data(*fl_plot)
+    rl.set_data(*rl_plot)
+    rear_axle.set_data(car.x, car.y)
+
+    # Show car's target
+    target.set_data(path.px[car.target_id], path.py[car.target_id])
+
+    # Annotate car's coordinate above car
+    annotation.set_text(f"Crosstrack error: {car.crosstrack_error:.5f}")
+    annotation.set_position((car.x - 10, car.y + 5))
+
+    # Animate yaw
+    yaw_arr.append(car.yaw)
+    yaw_data.set_data(np.arange(frame + 2), yaw_arr)
+    ax[1].set_ylim(yaw_arr[-1] - 5, yaw_arr[-1] + 5)
+
+    # Animate crosstrack error
+    crosstrack_arr.append(car.crosstrack_error)
+    crosstrack_data.set_data(np.arange(frame + 2), crosstrack_arr)
+    ax[2].set_ylim(crosstrack_arr[-1] - 1, crosstrack_arr[-1] + 1)
+
+    return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
+
 def main():
     
     sim = Simulation()
@@ -99,7 +139,7 @@ def main():
     rr, = ax[0].plot([], [], color='black')
     fl, = ax[0].plot([], [], color='black')
     rl, = ax[0].plot([], [], color='black')
-    rear_axle, = ax[0].plot(car.x, car.y, '+', color='black', markersize=2)
+    rear_axle, = ax[0].plot(car.x, car.y, '+', color='black', markersize=1)
 
     yaw_arr = []
     yaw_data, = ax[1].plot([], [])
@@ -113,48 +153,9 @@ def main():
     ax[2].set_ylabel("Crosstrack error")
     ax[2].grid()
 
-    frames = []
-    
-    def animate(frame):
+    fargs = (ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data)
 
-        # Camera tracks car
-        ax[0].set_xlim(car.x - sim.map_size, car.x + sim.map_size)
-        ax[0].set_ylim(car.y - 13, car.y + 17)
-
-        # Drive and draw car
-        car.drive()
-        outline_plot, fr_plot, rr_plot, fl_plot, rl_plot = desc.plot_car(car.x, car.y, car.yaw, car.delta)
-        outline.set_data(outline_plot[0], outline_plot[1])
-        fr.set_data(*fr_plot)
-        rr.set_data(*rr_plot)
-        fl.set_data(*fl_plot)
-        rl.set_data(*rl_plot)
-        rear_axle.set_data(car.x, car.y)
-
-        # Show car's target
-        target.set_data(path.px[car.target_id], path.py[car.target_id])
-
-        # Annotate car's coordinate above car
-        annotation.set_text(f"Crosstrack error: {car.crosstrack_error:.5f}")
-        annotation.set_position((car.x - 10, car.y + 5))
-
-        frames.append(frame)
-
-        # Animate yaw
-        yaw_arr.append(car.yaw)
-        yaw_data.set_data(frames, yaw_arr)
-        ax[1].set_ylim(yaw_arr[-1] - 5, yaw_arr[-1] + 5)
-
-        # Animate crosstrack error
-        crosstrack_arr.append(car.crosstrack_error)
-        crosstrack_data.set_data(frames, crosstrack_arr)
-        ax[2].set_ylim(crosstrack_arr[-1] - 1, crosstrack_arr[-1] + 1)
-
-        ax[0].set_title(f'{sim.dt*frame:.2f}s', loc='right')
-
-        return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
-
-    _ = FuncAnimation(fig, animate, frames=sim.frames, interval=interval, repeat=sim.loop)
+    _ = FuncAnimation(fig, animate, frames=sim.frames, fargs=fargs, interval=interval, repeat=sim.loop)
     # anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
 
