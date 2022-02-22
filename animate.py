@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+from math import radians
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
 from libs.kinematic_model import KinematicBicycleModel
@@ -45,7 +46,7 @@ class Car:
         self.v = 25.0
         self.delta = 0.0
         self.wheelbase = 2.5
-        self.max_steer = np.deg2rad(33)
+        self.max_steer = radians(33)
         self.dt = sim_params.dt
         self.c_r = 0.01
         self.c_a = 2.0
@@ -77,6 +78,7 @@ class Car:
         self.delta, self.target_id, self.crosstrack_error = self.tracker.stanley_control(self.x, self.y, self.yaw, self.v, self.delta)
         self.x, self.y, self.yaw = self.kbm.kinematic_model(self.x, self.y, self.yaw, self.v, self.delta)
 
+def init_anim(): pass
 def animate(frame, *args):
 
     ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data = args
@@ -106,12 +108,12 @@ def animate(frame, *args):
 
     # Animate yaw
     yaw_arr.append(car.yaw)
-    yaw_data.set_data(np.arange(frame + 2), yaw_arr)
+    yaw_data.set_data(np.arange(frame + 1), yaw_arr)
     ax[1].set_ylim(yaw_arr[-1] - 5, yaw_arr[-1] + 5)
 
     # Animate crosstrack error
     crosstrack_arr.append(car.crosstrack_error)
-    crosstrack_data.set_data(np.arange(frame + 2), crosstrack_arr)
+    crosstrack_data.set_data(np.arange(frame + 1), crosstrack_arr)
     ax[2].set_ylim(crosstrack_arr[-1] - 1, crosstrack_arr[-1] + 1)
 
     return outline, fr, rr, fl, rl, rear_axle, target, yaw_data, crosstrack_data,
@@ -154,7 +156,7 @@ def main():
 
     fargs = (ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data)
 
-    _ = FuncAnimation(fig, animate, frames=sim.frames, fargs=fargs, interval=interval, repeat=sim.loop)
+    _ = FuncAnimation(fig, animate, frames=sim.frames, init_func=init_anim ,fargs=fargs, interval=interval, repeat=sim.loop)
     # anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
 
