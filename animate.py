@@ -8,7 +8,6 @@ from libs.car_description import Description
 from libs.cubic_spline_interpolator import generate_cubic_spline
 from stanley_controller import StanleyController
 
-
 class Simulation:
 
     def __init__(self):
