@@ -79,6 +79,12 @@ pip install numpy
 
 ## Demo
 
+Recursively git clone the repository
+
+```bash
+git clone --recurse-submodules https://github.com/winstxnhdw/FullStanleyController.git
+```
+
 Install requirements.txt
 
 ```bash
