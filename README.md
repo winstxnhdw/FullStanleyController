@@ -8,6 +8,10 @@
 
 The Stanley controller is a non-linear controller for real-time autonomous automobile trajectory tracking. This repository contains a complete python abstraction of Stanford's [Stanley controller](http://robotics.stanford.edu/~gabeh/papers/hoffmann_stanley_control07.pdf).
 
+```bash
+git clone --recurse-submodules https://github.com/winstxnhdw/FullStanleyController.git
+```
+
 #### Stanley Controller
 
 ```yaml
@@ -66,12 +70,6 @@ Every frame
 
 - This abstraction along with the original Stanley controller is based on forward driving. Thus, most computations are done relative to the vehicle's front axle.
 - If you are passing path information piecewise, you have the advantage of increasing your control gain even further to minimise crosstrack error.
-
-## Clone
-
-```bash
-git clone --recurse-submodules https://github.com/winstxnhdw/FullStanleyController.git
-```
 
 ## Requirements
 
