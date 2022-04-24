@@ -4,9 +4,7 @@ import pandas as pd
 from math import radians
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
-from libs.kinematic_model import KinematicBicycleModel
-from libs.car_description import Description
-from libs.cubic_spline_interpolator import generate_cubic_spline
+from libs import CarDescription, KinematicBicycleModel, generate_cubic_spline
 from stanley_controller import StanleyController
 
 class Simulation:
@@ -123,7 +121,7 @@ def main():
     sim = Simulation()
     path = Path()
     car = Car(path.px[0], path.py[0], path.pyaw[0], sim, path)
-    desc = Description(car.overall_length, car.overall_width, car.rear_overhang, car.tyre_diameter, car.tyre_width, car.axle_track, car.wheelbase)
+    desc = CarDescription(car.overall_length, car.overall_width, car.rear_overhang, car.tyre_diameter, car.tyre_width, car.axle_track, car.wheelbase)
 
     interval = sim.dt * 10**3
 
