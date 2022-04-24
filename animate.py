@@ -98,25 +98,25 @@ class Fargs:
         self.crosstrack_data = crosstrack_data
 
 def init_anim(): pass
-def animate(frame, Fargs):
+def animate(frame, fargs):
 
-    ax = Fargs.ax
-    sim = Fargs.sim
-    path = Fargs.path
-    car = Fargs.car
-    desc = Fargs.desc
-    outline = Fargs.outline
-    fr = Fargs.fr
-    rr = Fargs.rr
-    fl = Fargs.fl
-    rl = Fargs.rl
-    rear_axle = Fargs.rear_axle
-    annotation = Fargs.annotation
-    target = Fargs.target
-    yaw_arr = Fargs.yaw_arr
-    yaw_data = Fargs.yaw_data
-    crosstrack_arr = Fargs.crosstrack_arr
-    crosstrack_data = Fargs.crosstrack_data
+    ax = fargs.ax
+    sim = fargs.sim
+    path = fargs.path
+    car = fargs.car
+    desc = fargs.desc
+    outline = fargs.outline
+    fr = fargs.fr
+    rr = fargs.rr
+    fl = fargs.fl
+    rl = fargs.rl
+    rear_axle = fargs.rear_axle
+    annotation = fargs.annotation
+    target = fargs.target
+    yaw_arr = fargs.yaw_arr
+    yaw_data = fargs.yaw_data
+    crosstrack_arr = fargs.crosstrack_arr
+    crosstrack_data = fargs.crosstrack_data
 
     ax[0].set_title(f'{sim.dt*frame:.2f}s', loc='right')
 
