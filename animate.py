@@ -1,9 +1,10 @@
+import csv
 import numpy as np
-import pandas as pd
 
 from math import radians
 from matplotlib import pyplot as plt
 from matplotlib.animation import FuncAnimation
+
 from libs import CarDescription, KinematicBicycleModel, generate_cubic_spline
 from stanley_controller import StanleyController
 
@@ -24,13 +25,11 @@ class Path:
     def __init__(self):
 
         # Get path to waypoints.csv
-        dir_path = 'data/waypoints.csv'
-        df = pd.read_csv(dir_path)
+        with open('data/waypoints.csv', newline='') as f:
+            rows = list(csv.reader(f, delimiter=','))
 
-        x = df['X-axis'].values
-        y = df['Y-axis'].values
         ds = 0.05
-
+        x, y = [[float(i) for i in row] for row in zip(*rows[1:])]
         self.px, self.py, self.pyaw, _ = generate_cubic_spline(x, y, ds)
 
 class Car:
@@ -76,10 +75,48 @@ class Car:
         self.delta, self.target_id, self.crosstrack_error = self.tracker.stanley_control(self.x, self.y, self.yaw, self.v, self.delta)
         self.x, self.y, self.yaw = self.kbm.kinematic_model(self.x, self.y, self.yaw, self.v, self.delta)
 
-def init_anim(): pass
-def animate(frame, *args):
+class Fargs:
 
-    ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data = args
+    def __init__(self, ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data):
+        
+        self. ax = ax
+        self.sim = sim
+        self.path = path
+        self.car = car
+        self.desc = desc
+        self.outline = outline
+        self.fr = fr
+        self.rr = rr
+        self.fl = fl
+        self.rl = rl
+        self.rear_axle = rear_axle
+        self.annotation = annotation
+        self.target = target
+        self.yaw_arr = yaw_arr
+        self.yaw_data = yaw_data
+        self.crosstrack_arr = crosstrack_arr
+        self.crosstrack_data = crosstrack_data
+
+def init_anim(): pass
+def animate(frame, Fargs):
+
+    ax = Fargs.ax
+    sim = Fargs.sim
+    path = Fargs.path
+    car = Fargs.car
+    desc = Fargs.desc
+    outline = Fargs.outline
+    fr = Fargs.fr
+    rr = Fargs.rr
+    fl = Fargs.fl
+    rl = Fargs.rl
+    rear_axle = Fargs.rear_axle
+    annotation = Fargs.annotation
+    target = Fargs.target
+    yaw_arr = Fargs.yaw_arr
+    yaw_data = Fargs.yaw_data
+    crosstrack_arr = Fargs.crosstrack_arr
+    crosstrack_data = Fargs.crosstrack_data
 
     ax[0].set_title(f'{sim.dt*frame:.2f}s', loc='right')
 
@@ -152,7 +189,27 @@ def main():
     ax[2].set_ylabel("Crosstrack error")
     ax[2].grid()
 
-    fargs = (ax, sim, path, car, desc, outline, fr, rr, fl, rl, rear_axle, annotation, target, yaw_arr, yaw_data, crosstrack_arr, crosstrack_data)
+    fargs = [
+        Fargs(
+            ax=ax,
+            sim=sim,
+            path=path,
+            car=car,
+            desc=desc,
+            outline=outline,
+            fr=fr,
+            rr=rr,
+            fl=fl,
+            rl=rl,
+            rear_axle=rear_axle,
+            annotation=annotation,
+            target=target,
+            yaw_arr=yaw_arr,
+            yaw_data=yaw_data,
+            crosstrack_arr=crosstrack_arr,
+            crosstrack_data=crosstrack_data
+        )
+    ]
 
     _ = FuncAnimation(fig, animate, frames=sim.frames, init_func=init_anim ,fargs=fargs, interval=interval, repeat=sim.loop)
     # anim.save('animation.gif', writer='imagemagick', fps=50)
