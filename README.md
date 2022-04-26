@@ -18,9 +18,9 @@ At initialisation
 :param steering_damp_gain:          (float) steering damp gain
 :param max_steer:                   (float) vehicle's steering limits [rad]
 :param wheelbase:                   (float) vehicle's wheelbase [m]
-:param path_x:                      (numpy.ndarray) list of x-coordinates along the path
-:param path_y:                      (numpy.ndarray) list of y-coordinates along the path
-:param path_yaw:                    (numpy.ndarray) list of discrete yaw values along the path
+:param path_x:                      (ArrayLike) list of x-coordinates along the path
+:param path_y:                      (ArrayLike) list of y-coordinates along the path
+:param path_yaw:                    (ArrayLike) list of discrete yaw values along the path
 :param dt:                          (float) discrete time period [s]
 
 At every time step
@@ -53,9 +53,9 @@ Every frame
 :param yaw:                         (float) vehicle's heading [rad]
 :param target_velocity:             (float) vehicle's velocity [m/s]
 :param steering_angle:              (float) vehicle's steering angle [rad]
-:param path_x:                      (numpy.ndarray) piecewise list of x-coordinates along the path
-:param path_y:                      (numpy.ndarray) piecewise list of y-coordinates along the path
-:param path_yaw:                    (numpy.ndarray) piecewise list of discrete yaw values along the path
+:param path_x:                      (ndarray) piecewise list of x-coordinates along the path
+:param path_y:                      (ndarray) piecewise list of y-coordinates along the path
+:param path_yaw:                    (ndarray) piecewise list of discrete yaw values along the path
 
 :return limited_steering_angle:     (float) steering angle after imposing steering limits [rad]
 :return target_index:               (int) closest path index
