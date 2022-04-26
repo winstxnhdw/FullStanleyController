@@ -10,8 +10,6 @@ The Stanley controller is a non-linear controller for real-time autonomous autom
 
 #### Stanley Controller
 
-For the sake of performance, it is recommended to pass NumPy arrays to the piecewise function to reduce conversion overheads.
-
 ```yaml
 At initialisation
 :param control_gain:                (float) time constant [1/s]
@@ -38,6 +36,8 @@ At every time step
 ```
 
 #### Stanley Controller Piecewise
+
+For the sake of performance, it is recommended to pass NumPy arrays to the piecewise function to remove any conversion overheads in every frame. See [here](https://github.com/winstxnhdw/python-bench/blob/master/src/array_conversion.ipynb) to understand the performance impact of array conversions.
 
 ```yaml
 At initialisation
