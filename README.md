@@ -1,5 +1,8 @@
 # Stanley Controller
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/winstxnhdw/FullStanleyController.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/winstxnhdw/FullStanleyController/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/winstxnhdw/FullStanleyController.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/winstxnhdw/FullStanleyController/context:python)
+
 <div align="center">
 	<img src="resources/animation.gif" />
 </div>
