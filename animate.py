@@ -63,8 +63,8 @@ class Car:
         self.overall_length = 4.97
         self.overall_width = 1.964
         self.tyre_diameter = 0.4826
-        self.tyre_width = 0.2032
-        self.axle_track = 1.662
+        self.tyre_width = 0.265
+        self.axle_track = 1.7
         self.rear_overhang = (self.overall_length - self.wheelbase) / 2
 
         self.tracker = StanleyController(self.k, self.ksoft, self.kyaw, self.ksteer, self.max_steer, self.wheelbase, self.px, self.py, self.pyaw)
@@ -97,7 +97,6 @@ class Fargs:
         self.crosstrack_arr = crosstrack_arr
         self.crosstrack_data = crosstrack_data
 
-def init_anim(): pass
 def animate(frame, fargs):
 
     ax = fargs.ax
@@ -211,7 +210,7 @@ def main():
         )
     ]
 
-    _ = FuncAnimation(fig, animate, frames=sim.frames, init_func=init_anim ,fargs=fargs, interval=interval, repeat=sim.loop)
+    _ = FuncAnimation(fig, animate, frames=sim.frames, init_func=lambda: None ,fargs=fargs, interval=interval, repeat=sim.loop)
     # anim.save('animation.gif', writer='imagemagick', fps=50)
     plt.show()
 
